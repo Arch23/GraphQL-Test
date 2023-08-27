@@ -1,7 +1,7 @@
 import { User } from "../models/User";
 
 const _ = {
-    getUsers: (repository: User[], id:number|undefined) : User[] => {
+    getUsers: (id:number|undefined) : User[] => {
         if(id === null || !id || id<0){
             return repository;
         }else{
@@ -9,7 +9,7 @@ const _ = {
                 .filter((user: User) => user.id == id);
         }
     },
-    addUser: (repository: User[], newUser: User|null|undefined) : number => {
+    addUser: (newUser: User|null|undefined) : number => {
         if(!newUser || newUser===null || newUser.lastName?.length===0){
             return -1;
         }
@@ -24,7 +24,7 @@ const _ = {
         repository.push(newUser);
         return newUser.id;
     },
-    updateUser: (repository: User[], edit: User) : number => {
+    updateUser: (edit: User) : number => {
         const userToUpdateIndex = repository.findIndex((user:User) => user.id===edit.id);
         if(userToUpdateIndex<0){
             return -1;
@@ -55,7 +55,7 @@ const _ = {
             return userToUpdate.id ? userToUpdate.id : -1;
         }
     },
-    deleteUser: (repository: User[], deleteId: number): boolean => {
+    deleteUser: (deleteId: number): boolean => {
         const userToDeleteIndex = repository.findIndex((user:User) => user.id===deleteId);
         if(userToDeleteIndex<0){
             return false;
@@ -65,5 +65,21 @@ const _ = {
         }
     }
 }
+
+const repository: User[] = [];
+const u1 = new User();
+u1.firstName = "f1";
+u1.middleName = "m1";
+u1.lastName = "l1";
+u1.dob = new Date("1999-01-01");
+u1.phoneNumber = "9999-9999";
+const u2 = new User();
+u2.firstName = "f2";
+u2.middleName = "m2";
+u2.lastName = "l2";
+u2.dob = new Date("1999-02-01");
+u2.phoneNumber = "9999-9999";
+_.addUser(u1);
+_.addUser(u2);
 
 export default _;
